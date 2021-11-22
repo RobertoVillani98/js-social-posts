@@ -84,17 +84,39 @@ function popolateContainer() {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${iPost.likes}</b> persone
-                </div>
+                <button class="like-button  js-like-button" data-postid="${iPost.id}">
+                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                <span class="like-button__label">Mi Piace</span>
+            </button>
+        </div>
+        <div class="likes__counter">
+            Piace a <b id="like-counter-${iPost.id}" class="js-likes-counter">${iPost.likes}</b> persone
+        </div>
             </div> 
         </div>            
     </div>`
+
+    addLikes();
+}
+
+
+
+function addLikes() {
+    const likeBtn = document.getElementsByClassName("like-button");
+    for (let i = 0; i < likeBtn.length; i++) {
+        likeBtn[i].addEventListener("click", function () {
+            const likeCounter = document.getElementById(`like-counter-${i + 1}`);
+            let likeInt = parseInt(likeCounter.innerHTML);
+            if (!(this.classList.contains("like-button--liked"))) {
+                this.classList.add("like-button--liked");
+                likeInt += 1;
+            } else {
+                this.classList.remove("like-button--liked");
+                likeInt -= 1;
+            }
+            likeCounter.innerHTML = likeInt;
+        });
+    }
 }
 
 
